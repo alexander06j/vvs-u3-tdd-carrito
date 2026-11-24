@@ -104,4 +104,42 @@ describe('Carrito de Compras - Suite TDD', () => {
       expect(carrito.calcularSubtotal()).toBe(59.97);
     });
   });
+
+  describe('Ciclo TDD 2: RF-02 (Total), RF-03 (Descuentos 0-100%) y RF-05 (Validaciones de descuento)', () => {
+    it('CP-10 (Normal): debe aplicar un descuento válido (20%) y calcular el total correctamente', () => {
+      carrito.agregarProducto({ id: 'P01', nombre: 'Monitor 24"', precio: 100, cantidad: 2 });
+      carrito.aplicarDescuento(20);
+
+      expect(carrito.descuento).toBe(20);
+      expect(carrito.calcularSubtotal()).toBe(200);
+      expect(carrito.calcularTotal()).toBe(160);
+    });
+
+    it('CP-11 (Borde): debe manejar descuentos en los límites 0% y 100% sin generar totales negativos', () => {
+      carrito.agregarProducto({ id: 'P01', nombre: 'Silla Ergonómica', precio: 150, cantidad: 1 });
+
+      carrito.aplicarDescuento(0);
+      expect(carrito.calcularTotal()).toBe(150);
+
+      carrito.aplicarDescuento(100);
+      expect(carrito.calcularTotal()).toBe(0);
+      expect(carrito.calcularTotal()).toBeGreaterThanOrEqual(0);
+    });
+
+    it('CP-12 (Borde): debe redondear a 2 decimales al aplicar un descuento decimal (12.5% sobre 99.99)', () => {
+      carrito.agregarProducto({ id: 'P02', nombre: 'Audífonos Pro', precio: 99.99, cantidad: 1 });
+      carrito.aplicarDescuento(12.5);
+
+      expect(carrito.calcularTotal()).toBe(87.49);
+    });
+
+    it('CP-13 (Inválido): debe rechazar descuentos negativos, mayores a 100% o no numéricos', () => {
+      expect(() => carrito.aplicarDescuento(-0.01)).toThrow('El descuento debe estar entre 0 y 100');
+      expect(() => carrito.aplicarDescuento(-10)).toThrow('El descuento debe estar entre 0 y 100');
+      expect(() => carrito.aplicarDescuento(100.01)).toThrow('El descuento debe estar entre 0 y 100');
+      expect(() => carrito.aplicarDescuento(150)).toThrow('El descuento debe estar entre 0 y 100');
+      expect(() => carrito.aplicarDescuento('20')).toThrow('El descuento debe ser un número válido');
+      expect(() => carrito.aplicarDescuento(NaN)).toThrow('El descuento debe ser un número válido');
+    });
+  });
 });
