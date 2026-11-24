@@ -19,6 +19,16 @@ class Carrito {
     }
   }
 
+  _validarDescuento(porcentaje) {
+    if (typeof porcentaje !== 'number' || !Number.isFinite(porcentaje)) {
+      throw new Error('El descuento debe ser un número válido');
+    }
+
+    if (porcentaje < 0 || porcentaje > 100) {
+      throw new Error('El descuento debe estar entre 0 y 100');
+    }
+  }
+
   _validarProducto(producto) {
     if (!producto || typeof producto !== 'object') {
       throw new Error('El producto debe ser un objeto válido');
@@ -73,21 +83,15 @@ class Carrito {
   }
 
   aplicarDescuento(porcentaje) {
-    if (typeof porcentaje !== 'number' || !Number.isFinite(porcentaje)) {
-      throw new Error('El descuento debe ser un número válido');
-    }
-
-    if (porcentaje < 0 || porcentaje > 100) {
-      throw new Error('El descuento debe estar entre 0 y 100');
-    }
-
+    this._validarDescuento(porcentaje);
     this.descuento = porcentaje;
   }
 
   calcularTotal() {
     const subtotal = this.calcularSubtotal();
-    const totalConDescuento = subtotal * (1 - this.descuento / 100);
-    return Math.max(0, this._redondearMoneda(totalConDescuento));
+    const factorCobro = (100 - this.descuento) / 100;
+    const totalCalculado = this._redondearMoneda(subtotal * factorCobro);
+    return totalCalculado <= 0 ? 0 : totalCalculado;
   }
 }
 
