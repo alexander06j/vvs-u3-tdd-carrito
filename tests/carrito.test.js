@@ -200,4 +200,62 @@ describe('Carrito de Compras - Suite TDD', () => {
       );
     });
   });
+
+  describe('Fase C: Ampliación de Casos Negativos y Cobertura Total de Ramas (RF-05)', () => {
+    it('CP-19 (Inválido): debe rechazar IDs vacíos, solo espacios o no tipo string al actualizar o eliminar', () => {
+      carrito.agregarProducto({ id: 'P01', nombre: 'Teclado Mecánico', precio: 50, cantidad: 2 });
+
+      expect(() => carrito.actualizarCantidad('', 3)).toThrow(
+        'El ID del producto es obligatorio y debe ser válido'
+      );
+      expect(() => carrito.actualizarCantidad('   ', 3)).toThrow(
+        'El ID del producto es obligatorio y debe ser válido'
+      );
+      expect(() => carrito.actualizarCantidad(null, 3)).toThrow(
+        'El ID del producto es obligatorio y debe ser válido'
+      );
+      expect(() => carrito.eliminarProducto('')).toThrow(
+        'El ID del producto es obligatorio y debe ser válido'
+      );
+      expect(() => carrito.eliminarProducto(123)).toThrow(
+        'El ID del producto es obligatorio y debe ser válido'
+      );
+    });
+
+    it('CP-20 (Inválido): debe rechazar arreglos como producto y valores Infinity en precio, cantidad o descuento', () => {
+      expect(() => carrito.agregarProducto([])).toThrow('El producto debe ser un objeto válido');
+      expect(() => carrito.agregarProducto('producto')).toThrow('El producto debe ser un objeto válido');
+      expect(() =>
+        carrito.agregarProducto({ id: 'P01', nombre: 'Monitor', precio: Infinity, cantidad: 1 })
+      ).toThrow('El precio debe ser un número válido');
+      expect(() =>
+        carrito.agregarProducto({ id: 'P01', nombre: 'Monitor', precio: 100, cantidad: Infinity })
+      ).toThrow('La cantidad debe ser un número entero positivo');
+      expect(() => carrito.aplicarDescuento(Infinity)).toThrow(
+        'El descuento debe ser un número válido'
+      );
+      expect(() => carrito.aplicarDescuento(-Infinity)).toThrow(
+        'El descuento debe ser un número válido'
+      );
+    });
+
+    it('CP-21 (Inválido / Invarianza): debe preservar intacto el estado del carrito tras operaciones inválidas', () => {
+      carrito.agregarProducto({ id: 'P01', nombre: 'Laptop', precio: 1000, cantidad: 1 });
+      carrito.aplicarDescuento(10);
+
+      expect(() =>
+        carrito.agregarProducto({ id: 'P01', nombre: 'Laptop', precio: -50, cantidad: 2 })
+      ).toThrow('El precio no puede ser negativo');
+      expect(() => carrito.actualizarCantidad('P01', 0)).toThrow(
+        'La cantidad debe ser un número entero positivo'
+      );
+      expect(() => carrito.aplicarDescuento(150)).toThrow('El descuento debe estar entre 0 y 100');
+
+      expect(carrito.items).toHaveLength(1);
+      expect(carrito.items[0].cantidad).toBe(1);
+      expect(carrito.descuento).toBe(10);
+      expect(carrito.calcularSubtotal()).toBe(1000);
+      expect(carrito.calcularTotal()).toBe(900);
+    });
+  });
 });

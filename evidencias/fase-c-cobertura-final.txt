@@ -1,0 +1,19 @@
+$ npm run coverage
+
+ RUN  v3.2.7 C:/Users/alexa/.gemini/antigravity/scratch/vvs-u3-tdd-carrito
+      Coverage enabled with v8
+
+ ✓ tests/carrito.test.js (22 tests) 27ms
+
+ Test Files  1 passed (1)
+      Tests  22 passed (22)
+   Start at  21:01:17
+   Duration  1.38s (transform 65ms, setup 0ms, collect 93ms, tests 27ms, environment 0ms, prepare 450ms)
+
+ % Coverage report from v8
+------------|---------|----------|---------|---------|-------------------
+File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+------------|---------|----------|---------|---------|-------------------
+All files   |     100 |      100 |     100 |     100 |                   
+ carrito.js |     100 |      100 |     100 |     100 |                   
+------------|---------|----------|---------|---------|-------------------

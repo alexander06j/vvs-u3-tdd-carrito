@@ -13,6 +13,13 @@ class Carrito {
     return Math.round((valor + Number.EPSILON) * 100) / 100;
   }
 
+  _normalizarId(id) {
+    if (typeof id !== 'string' || id.trim() === '') {
+      throw new Error('El ID del producto es obligatorio y debe ser válido');
+    }
+    return id.trim();
+  }
+
   _validarCantidadEnteraPositiva(cantidad) {
     if (typeof cantidad !== 'number' || !Number.isInteger(cantidad) || cantidad <= 0) {
       throw new Error('La cantidad debe ser un número entero positivo');
@@ -30,11 +37,7 @@ class Carrito {
   }
 
   _obtenerIndiceProducto(id) {
-    if (typeof id !== 'string' || id.trim() === '') {
-      throw new Error('El ID del producto es obligatorio y debe ser válido');
-    }
-
-    const idNormalizado = id.trim();
+    const idNormalizado = this._normalizarId(id);
     const indice = this.items.findIndex((producto) => producto.id === idNormalizado);
     if (indice === -1) {
       throw new Error('Producto no encontrado en el carrito');
@@ -44,15 +47,12 @@ class Carrito {
   }
 
   _validarProducto(producto) {
-    if (!producto || typeof producto !== 'object') {
+    if (!producto || typeof producto !== 'object' || Array.isArray(producto)) {
       throw new Error('El producto debe ser un objeto válido');
     }
 
     const { id, nombre, precio, cantidad } = producto;
-
-    if (typeof id !== 'string' || id.trim() === '') {
-      throw new Error('El ID del producto es obligatorio y debe ser válido');
-    }
+    const idNormalizado = this._normalizarId(id);
 
     if (typeof nombre !== 'string' || nombre.trim() === '') {
       throw new Error('El nombre del producto es obligatorio');
@@ -67,24 +67,23 @@ class Carrito {
     }
 
     this._validarCantidadEnteraPositiva(cantidad);
+
+    return {
+      id: idNormalizado,
+      nombre: nombre.trim(),
+      precio,
+      cantidad,
+    };
   }
 
   agregarProducto(producto) {
-    this._validarProducto(producto);
-
-    const idNormalizado = producto.id.trim();
-    const nombreNormalizado = producto.nombre.trim();
-    const existente = this.items.find((item) => item.id === idNormalizado);
+    const productoValidado = this._validarProducto(producto);
+    const existente = this.items.find((item) => item.id === productoValidado.id);
 
     if (existente) {
-      existente.cantidad += producto.cantidad;
+      existente.cantidad += productoValidado.cantidad;
     } else {
-      this.items.push({
-        id: idNormalizado,
-        nombre: nombreNormalizado,
-        precio: producto.precio,
-        cantidad: producto.cantidad,
-      });
+      this.items.push(productoValidado);
     }
   }
 
@@ -104,8 +103,7 @@ class Carrito {
   calcularTotal() {
     const subtotal = this.calcularSubtotal();
     const factorCobro = (100 - this.descuento) / 100;
-    const totalCalculado = this._redondearMoneda(subtotal * factorCobro);
-    return totalCalculado <= 0 ? 0 : totalCalculado;
+    return this._redondearMoneda(subtotal * factorCobro);
   }
 
   actualizarCantidad(id, nuevaCantidad) {
