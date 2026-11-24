@@ -71,6 +71,24 @@ class Carrito {
     );
     return this._redondearMoneda(subtotalSinRedondear);
   }
+
+  aplicarDescuento(porcentaje) {
+    if (typeof porcentaje !== 'number' || !Number.isFinite(porcentaje)) {
+      throw new Error('El descuento debe ser un número válido');
+    }
+
+    if (porcentaje < 0 || porcentaje > 100) {
+      throw new Error('El descuento debe estar entre 0 y 100');
+    }
+
+    this.descuento = porcentaje;
+  }
+
+  calcularTotal() {
+    const subtotal = this.calcularSubtotal();
+    const totalConDescuento = subtotal * (1 - this.descuento / 100);
+    return Math.max(0, this._redondearMoneda(totalConDescuento));
+  }
 }
 
 module.exports = { Carrito };
