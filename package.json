@@ -1,0 +1,28 @@
+{
+  "name": "vvs-u3-tdd-carrito",
+  "version": "1.0.0",
+  "description": "Desarrollo dirigido por pruebas (TDD) de un carrito de compras con JavaScript, Vitest y GitHub Actions (VVS Unidad 3)",
+  "main": "src/carrito.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "tdd",
+    "vitest",
+    "carrito-compras",
+    "vvs",
+    "github-actions"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@vitest/coverage-v8": "^3.0.0",
+    "vitest": "^3.0.0"
+  }
+}
