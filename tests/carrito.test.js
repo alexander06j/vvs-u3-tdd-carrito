@@ -142,4 +142,62 @@ describe('Carrito de Compras - Suite TDD', () => {
       expect(() => carrito.aplicarDescuento(NaN)).toThrow('El descuento debe ser un número válido');
     });
   });
+
+  describe('Ciclo TDD 3: RF-04 (Actualizar cantidades y eliminar productos) y RF-05 (Validaciones)', () => {
+    it('CP-14 (Normal): debe actualizar la cantidad de un producto existente y recalcular el subtotal', () => {
+      carrito.agregarProducto({ id: 'P01', nombre: 'Teclado Mecánico', precio: 50, cantidad: 2 });
+      carrito.actualizarCantidad('P01', 5);
+
+      expect(carrito.items[0].cantidad).toBe(5);
+      expect(carrito.calcularSubtotal()).toBe(250);
+    });
+
+    it('CP-15 (Normal): debe eliminar un producto existente del carrito por su ID', () => {
+      carrito.agregarProducto({ id: 'P01', nombre: 'Teclado Mecánico', precio: 50, cantidad: 2 });
+      carrito.agregarProducto({ id: 'P02', nombre: 'Mouse Gamer', precio: 30, cantidad: 1 });
+
+      carrito.eliminarProducto('P01');
+
+      expect(carrito.items).toHaveLength(1);
+      expect(carrito.items[0].id).toBe('P02');
+      expect(carrito.calcularSubtotal()).toBe(30);
+    });
+
+    it('CP-16 (Borde): debe permitir actualizar cantidad a 1 y eliminar el último producto dejando total en 0', () => {
+      carrito.agregarProducto({ id: 'P01', nombre: 'Teclado Mecánico', precio: 50, cantidad: 3 });
+
+      carrito.actualizarCantidad('P01', 1);
+      expect(carrito.items[0].cantidad).toBe(1);
+      expect(carrito.calcularTotal()).toBe(50);
+
+      carrito.eliminarProducto('P01');
+      expect(carrito.items).toHaveLength(0);
+      expect(carrito.calcularTotal()).toBe(0);
+    });
+
+    it('CP-17 (Inválido): debe rechazar actualizar cantidad a 0, número negativo o decimal', () => {
+      carrito.agregarProducto({ id: 'P01', nombre: 'Teclado Mecánico', precio: 50, cantidad: 2 });
+
+      expect(() => carrito.actualizarCantidad('P01', 0)).toThrow(
+        'La cantidad debe ser un número entero positivo'
+      );
+      expect(() => carrito.actualizarCantidad('P01', -2)).toThrow(
+        'La cantidad debe ser un número entero positivo'
+      );
+      expect(() => carrito.actualizarCantidad('P01', 2.5)).toThrow(
+        'La cantidad debe ser un número entero positivo'
+      );
+    });
+
+    it('CP-18 (Inválido): debe lanzar error claro al intentar actualizar o eliminar un ID inexistente', () => {
+      carrito.agregarProducto({ id: 'P01', nombre: 'Teclado Mecánico', precio: 50, cantidad: 1 });
+
+      expect(() => carrito.actualizarCantidad('INEXISTENTE', 3)).toThrow(
+        'Producto no encontrado en el carrito'
+      );
+      expect(() => carrito.eliminarProducto('INEXISTENTE')).toThrow(
+        'Producto no encontrado en el carrito'
+      );
+    });
+  });
 });

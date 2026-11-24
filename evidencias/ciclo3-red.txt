@@ -1,0 +1,34 @@
+$ npm test
+
+ RUN  v3.2.7 C:/Users/alexa/.gemini/antigravity/scratch/vvs-u3-tdd-carrito
+
+ ❯ tests/carrito.test.js (19 tests | 5 failed) 44ms
+   ✓ Carrito de Compras - Suite TDD > Estado Inicial > debe instanciar un carrito vacío inicialmente 4ms
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-01 (Normal): debe agregar un producto válido a un carrito vacío 2ms
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-02 (Normal): debe acumular la cantidad si se agrega un producto cuyo ID ya existe 0ms
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-03 (Borde): debe permitir cantidad mínima 1 y precio límite 0 (artículo promocional) 1ms
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-04 (Inválido): debe rechazar productos nulos, sin ID o con nombre vacío 2ms
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-05 (Inválido): debe rechazar precios negativos o no numéricos 1ms
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-06 (Inválido): debe rechazar cantidades iguales a 0, negativas o decimales 1ms
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-07 (Normal): debe calcular el subtotal correctamente con múltiples productos 0ms
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-08 (Borde): debe retornar subtotal 0 cuando el carrito está vacío 0ms
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-09 (Borde): debe redondear el subtotal a 2 decimales evitando errores IEEE 754 (19.99 * 3) 0ms
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 2: RF-02 (Total), RF-03 (Descuentos 0-100%) y RF-05 (Validaciones de descuento) > CP-10 (Normal): debe aplicar un descuento válido (20%) y calcular el total correctamente 1ms
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 2: RF-02 (Total), RF-03 (Descuentos 0-100%) y RF-05 (Validaciones de descuento) > CP-11 (Borde): debe manejar descuentos en los límites 0% y 100% sin generar totales negativos 0ms
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 2: RF-02 (Total), RF-03 (Descuentos 0-100%) y RF-05 (Validaciones de descuento) > CP-12 (Borde): debe redondear a 2 decimales al aplicar un descuento decimal (12.5% sobre 99.99) 0ms
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 2: RF-02 (Total), RF-03 (Descuentos 0-100%) y RF-05 (Validaciones de descuento) > CP-13 (Inválido): debe rechazar descuentos negativos, mayores a 100% o no numéricos 1ms
+   × Carrito de Compras - Suite TDD > Ciclo TDD 3: RF-04 (Actualizar cantidades y eliminar productos) y RF-05 (Validaciones) > CP-14 (Normal): debe actualizar la cantidad de un producto existente y recalcular el subtotal 13ms
+     → carrito.actualizarCantidad is not a function
+   × Carrito de Compras - Suite TDD > Ciclo TDD 3: RF-04 (Actualizar cantidades y eliminar productos) y RF-05 (Validaciones) > CP-15 (Normal): debe eliminar un producto existente del carrito por su ID 1ms
+     → carrito.eliminarProducto is not a function
+   × Carrito de Compras - Suite TDD > Ciclo TDD 3: RF-04 (Actualizar cantidades y eliminar productos) y RF-05 (Validaciones) > CP-16 (Borde): debe permitir actualizar cantidad a 1 y eliminar el último producto dejando total en 0 0ms
+     → carrito.actualizarCantidad is not a function
+   × Carrito de Compras - Suite TDD > Ciclo TDD 3: RF-04 (Actualizar cantidades y eliminar productos) y RF-05 (Validaciones) > CP-17 (Inválido): debe rechazar actualizar cantidad a 0, número negativo o decimal 11ms
+     → expected [Function] to throw error including 'La cantidad debe ser un número entero…' but got 'carrito.actualizarCantidad is not a f…'
+   × Carrito de Compras - Suite TDD > Ciclo TDD 3: RF-04 (Actualizar cantidades y eliminar productos) y RF-05 (Validaciones) > CP-18 (Inválido): debe lanzar error claro al intentar actualizar o eliminar un ID inexistente 2ms
+     → expected [Function] to throw error including 'Producto no encontrado en el carrito' but got 'carrito.actualizarCantidad is not a f…'
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 14 passed (19)
+   Start at  20:52:15
+   Duration  1.28s
