@@ -93,6 +93,25 @@ class Carrito {
     const totalCalculado = this._redondearMoneda(subtotal * factorCobro);
     return totalCalculado <= 0 ? 0 : totalCalculado;
   }
+
+  actualizarCantidad(id, nuevaCantidad) {
+    const item = this.items.find((producto) => producto.id === id);
+    if (!item) {
+      throw new Error('Producto no encontrado en el carrito');
+    }
+
+    this._validarCantidadEnteraPositiva(nuevaCantidad);
+    item.cantidad = nuevaCantidad;
+  }
+
+  eliminarProducto(id) {
+    const indice = this.items.findIndex((producto) => producto.id === id);
+    if (indice === -1) {
+      throw new Error('Producto no encontrado en el carrito');
+    }
+
+    this.items.splice(indice, 1);
+  }
 }
 
 module.exports = { Carrito };
