@@ -9,7 +9,17 @@ class Carrito {
     this.descuento = 0;
   }
 
-  agregarProducto(producto) {
+  _redondearMoneda(valor) {
+    return Math.round((valor + Number.EPSILON) * 100) / 100;
+  }
+
+  _validarCantidadEnteraPositiva(cantidad) {
+    if (typeof cantidad !== 'number' || !Number.isInteger(cantidad) || cantidad <= 0) {
+      throw new Error('La cantidad debe ser un número entero positivo');
+    }
+  }
+
+  _validarProducto(producto) {
     if (!producto || typeof producto !== 'object') {
       throw new Error('El producto debe ser un objeto válido');
     }
@@ -32,24 +42,34 @@ class Carrito {
       throw new Error('El precio no puede ser negativo');
     }
 
-    if (typeof cantidad !== 'number' || !Number.isInteger(cantidad) || cantidad <= 0) {
-      throw new Error('La cantidad debe ser un número entero positivo');
-    }
+    this._validarCantidadEnteraPositiva(cantidad);
+  }
 
-    const existente = this.items.find((item) => item.id === id);
+  agregarProducto(producto) {
+    this._validarProducto(producto);
+
+    const idNormalizado = producto.id.trim();
+    const nombreNormalizado = producto.nombre.trim();
+    const existente = this.items.find((item) => item.id === idNormalizado);
+
     if (existente) {
-      existente.cantidad += cantidad;
+      existente.cantidad += producto.cantidad;
     } else {
-      this.items.push({ id, nombre, precio, cantidad });
+      this.items.push({
+        id: idNormalizado,
+        nombre: nombreNormalizado,
+        precio: producto.precio,
+        cantidad: producto.cantidad,
+      });
     }
   }
 
   calcularSubtotal() {
-    let suma = 0;
-    for (const item of this.items) {
-      suma += item.precio * item.cantidad;
-    }
-    return Number(suma.toFixed(2));
+    const subtotalSinRedondear = this.items.reduce(
+      (acumulado, item) => acumulado + item.precio * item.cantidad,
+      0
+    );
+    return this._redondearMoneda(subtotalSinRedondear);
   }
 }
 
