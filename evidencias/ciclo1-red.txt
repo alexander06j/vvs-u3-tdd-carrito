@@ -1,0 +1,29 @@
+$ npm test
+
+ RUN  v3.2.7 C:/Users/alexa/.gemini/antigravity/scratch/vvs-u3-tdd-carrito
+
+ ❯ tests/carrito.test.js (10 tests | 9 failed) 36ms
+   ✓ Carrito de Compras - Suite TDD > Estado Inicial > debe instanciar un carrito vacío inicialmente 4ms
+   × Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-01 (Normal): debe agregar un producto válido a un carrito vacío 10ms
+     → carrito.agregarProducto is not a function
+   × Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-02 (Normal): debe acumular la cantidad si se agrega un producto cuyo ID ya existe 1ms
+     → carrito.agregarProducto is not a function
+   × Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-03 (Borde): debe permitir cantidad mínima 1 y precio límite 0 (artículo promocional) 0ms
+     → carrito.agregarProducto is not a function
+   × Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-04 (Inválido): debe rechazar productos nulos, sin ID o con nombre vacío 13ms
+     → expected [Function] to throw error including 'El producto debe ser un objeto válido' but got 'carrito.agregarProducto is not a func…'
+   × Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-05 (Inválido): debe rechazar precios negativos o no numéricos 2ms
+     → expected [Function] to throw error including 'El precio no puede ser negativo' but got 'carrito.agregarProducto is not a func…'
+   × Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-06 (Inválido): debe rechazar cantidades iguales a 0, negativas o decimales 1ms
+     → expected [Function] to throw error including 'La cantidad debe ser un número entero…' but got 'carrito.agregarProducto is not a func…'
+   × Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-07 (Normal): debe calcular el subtotal correctamente con múltiples productos 1ms
+     → carrito.agregarProducto is not a function
+   × Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-08 (Borde): debe retornar subtotal 0 cuando el carrito está vacío 1ms
+     → carrito.calcularSubtotal is not a function
+   × Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-09 (Borde): debe redondear el subtotal a 2 decimales evitando errores IEEE 754 (19.99 * 3) 1ms
+     → carrito.agregarProducto is not a function
+
+ Test Files  1 failed (1)
+      Tests  9 failed | 1 passed (10)
+   Start at  20:45:59
+   Duration  1.30s
