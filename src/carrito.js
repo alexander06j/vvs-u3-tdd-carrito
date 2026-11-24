@@ -29,6 +29,20 @@ class Carrito {
     }
   }
 
+  _obtenerIndiceProducto(id) {
+    if (typeof id !== 'string' || id.trim() === '') {
+      throw new Error('El ID del producto es obligatorio y debe ser válido');
+    }
+
+    const idNormalizado = id.trim();
+    const indice = this.items.findIndex((producto) => producto.id === idNormalizado);
+    if (indice === -1) {
+      throw new Error('Producto no encontrado en el carrito');
+    }
+
+    return indice;
+  }
+
   _validarProducto(producto) {
     if (!producto || typeof producto !== 'object') {
       throw new Error('El producto debe ser un objeto válido');
@@ -95,21 +109,13 @@ class Carrito {
   }
 
   actualizarCantidad(id, nuevaCantidad) {
-    const item = this.items.find((producto) => producto.id === id);
-    if (!item) {
-      throw new Error('Producto no encontrado en el carrito');
-    }
-
+    const indice = this._obtenerIndiceProducto(id);
     this._validarCantidadEnteraPositiva(nuevaCantidad);
-    item.cantidad = nuevaCantidad;
+    this.items[indice].cantidad = nuevaCantidad;
   }
 
   eliminarProducto(id) {
-    const indice = this.items.findIndex((producto) => producto.id === id);
-    if (indice === -1) {
-      throw new Error('Producto no encontrado en el carrito');
-    }
-
+    const indice = this._obtenerIndiceProducto(id);
     this.items.splice(indice, 1);
   }
 }
