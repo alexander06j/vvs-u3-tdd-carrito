@@ -1,0 +1,20 @@
+$ npm test
+
+ RUN  v3.2.7 C:/Users/alexa/.gemini/antigravity/scratch/vvs-u3-tdd-carrito
+
+ ✓ tests/carrito.test.js (10 tests) 14ms
+   ✓ Carrito de Compras - Suite TDD > Estado Inicial > debe instanciar un carrito vacío inicialmente
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-01 (Normal): debe agregar un producto válido a un carrito vacío
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-02 (Normal): debe acumular la cantidad si se agrega un producto cuyo ID ya existe
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-03 (Borde): debe permitir cantidad mínima 1 y precio límite 0 (artículo promocional)
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-04 (Inválido): debe rechazar productos nulos, sin ID o con nombre vacío
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-05 (Inválido): debe rechazar precios negativos o no numéricos
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-06 (Inválido): debe rechazar cantidades iguales a 0, negativas o decimales
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-07 (Normal): debe calcular el subtotal correctamente con múltiples productos
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-08 (Borde): debe retornar subtotal 0 cuando el carrito está vacío
+   ✓ Carrito de Compras - Suite TDD > Ciclo TDD 1: RF-01 (Agregar productos), RF-02 (Subtotal) y RF-05 (Validaciones al agregar) > CP-09 (Borde): debe redondear el subtotal a 2 decimales evitando errores IEEE 754 (19.99 * 3)
+
+ Test Files  1 passed (1)
+      Tests  10 passed (10)
+   Start at  20:47:01
+   Duration  1.12s
